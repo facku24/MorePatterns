@@ -1,0 +1,63 @@
+PATRON DE DISEÑO:
+
+INTENCIÓN:
+
+	* Proporcionar una interfaz para crear familias de objetos relacionados o 
+	  dependientes sin especificar sus clases concretas.
+
+	* Una jerarquía que encapsula: muchas "plataformas" posibles y la construcción 
+	  de un conjunto de "productos".
+
+	* El operador "new" considera perjudicial.
+
+PROBLEMA:
+
+Si una aplicación debe ser portable, debe encapsular las dependencias de la plataforma. 
+Estas "plataformas" pueden incluir: sistema de ventanas, sistema operativo, base de datos, 
+etc. Con demasiada frecuencia, esta encapsulación no está diseñada de antemano, y muchas 
+declaraciones de casos #ifdef con opciones para todas las plataformas compatibles actualmente 
+comienzan a procrearse como conejos en todo el código .
+
+DISCUSIÓN:
+
+Proporcionar un nivel de direccionamiento indirecto que resuma la creación de familias 
+de objetos relacionados o dependientes sin especificar directamente sus clases concretas.
+El objeto "factory" ​​tiene la responsabilidad de proporcionar servicios de creación 
+para toda la familia de plataformas. Los clientes nunca crean objetos de plataforma 
+directamente, le piden a la fábrica que haga eso por ellos.
+
+Este mecanismo facilita el intercambio de familias de productos porque la clase específica 
+del objeto de fábrica aparece solo una vez en la aplicación, donde se crea una instancia. 
+La aplicación puede reemplazar al por mayor toda la familia de productos simplemente 
+mediante la instanciación de una instancia concreta diferente de la fábrica abstracta.
+
+Debido a que el servicio proporcionado por el objeto de fábrica es tan generalizado, 
+se implementa de forma rutinaria como Singleton.
+
+ESTRUCTURA:
+
+El "Abstract Factory" define un método de fábrica por producto. Cada método de fábrica 
+encapsula el operador  "new" y las clases de productos concretos, específicos de la 
+plataforma. Cada "plataforma" se modela con una clase derivada de "Factory".
+
+EJEMPLO:
+
+El propósito de "Abstract Factory" es proporcionar una interfaz para crear familias de objetos 
+relacionados, sin especificar clases concretas. Este patrón se encuentra en el equipo de 
+estampado de chapa utilizado en la fabricación de automóviles japoneses. El equipo de estampado 
+es una fábrica abstracta que crea partes de carrocería. La misma maquinaria se utiliza para 
+sellar puertas de la derecha, puertas de la izquierda, guardabarros delanteros derechos, 
+guardabarros delanteros izquierdos, capuchas, etc. para diferentes modelos de automóviles. 
+Mediante el uso de rodillos para cambiar las matrices de estampado, las clases de concreto 
+producidas por la maquinaria se pueden cambiar en tres minutos.
+
+LISTA DE VERIFICACIÓN:
+
+	1. Decida si la "independencia de la plataforma" y los servicios de creación son la 
+	fuente actual de dolor.
+	2. Mapear una matriz de "plataformas" versus "productos".
+	3. Defina una interfaz de fábrica que consiste en un método de fábrica por producto.
+	4. Defina una clase derivada de fábrica para cada plataforma que encapsule todas las 
+	referencias al nuevo operador.
+	5. El cliente debe retirar todas las referencias a nuevas y utilizar los métodos de 
+	fábrica para crear los objetos del producto.
