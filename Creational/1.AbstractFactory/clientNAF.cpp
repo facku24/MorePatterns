@@ -1,15 +1,18 @@
-#include "clietNAF.h"
-#include "widgetNAF"
+#include "clientNAF.h"
+#include "widgetNAF.h"
 #include <iostream>
 
-/**
- * Here's a client, which uses concrete products
+/*
+ * Here's a client, which uses concrete products directly
+ * It's code filled up with nasty switch statements
+ * which check the product type before its use.
  */
+
 void Client::draw()
 {
-#ifdef
+#ifdef LINUX
 	Widget* w = new LinuxButton;
-#else
+#else // WINDOWS
 	Widget* w = new WindowsButton;
 #endif
 	w->draw();
@@ -19,12 +22,12 @@ void Client::draw()
 
 void Client::display_window_one()
 {
-#ifdef
+#ifdef LINUX
 	Widget* w[] = {
 		new LinuxButton,
 		new LinuxMenu
 	};
-#else
+#else // WINDOWS
 	Widget* w[] = {
 		new WindowsButton,
 		new WindowsMenu
@@ -36,7 +39,17 @@ void Client::display_window_one()
 
 void Client::display_window_two()
 {
-#ifdef
-#else
+#ifdef LINUX
+	Widget* w[] = {
+		new LinuxButton,
+		new LinuxMenu
+	};
+#else // WINDOWS
+	Widget* w[] = {
+		new WindowsButton,
+		new WindowsMenu
+	};
 #endif
+	w[0]->draw();
+	w[1]->draw();
 }

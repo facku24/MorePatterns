@@ -10,4 +10,4 @@ public:
 };
 
 
-#endif _CLIENTNOTAF_H_
+#endif // _CLIENTNOTAF_H_
